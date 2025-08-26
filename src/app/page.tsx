@@ -76,32 +76,32 @@ export default function Home() {
     <>
       <main className="p-4 m-4">
         <header className="flex flex-col gap-2">
-          <h1 className="text-3xl font-bold">
-            Solace Advocates
-          </h1>
+          <h1 className="text-3xl font-bold">Solace Advocates</h1>
           <p className="text-sm text-gray-600">
             Search and explore our advocate network to find your best match.
           </p>
         </header>
         <div className="flex justify-between p-4">
-        <AdvocateSearchBar
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-        />
-        <div className="w-40 flex end">
-          <label className="text-sm font-medium mb-1 block">Rows / page</label>
-          <select
-            className="border rounded px-3 py-2 w-full"
-            value={pageSize}
-            onChange={(e) => setPageSize(Number(e.target.value))}
-          >
-            {PAGE_SIZE_OPTIONS.map((n) => (
-              <option key={n} value={n}>
-                {n}
-              </option>
-            ))}
-          </select>
-        </div>
+          <AdvocateSearchBar
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+          />
+          <div className="w-40 flex end">
+            <label className="text-sm font-medium mb-1 block">
+              Rows / page
+            </label>
+            <select
+              className="border rounded px-3 py-2 w-full"
+              value={pageSize}
+              onChange={(e) => setPageSize(Number(e.target.value))}
+            >
+              {PAGE_SIZE_OPTIONS.map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         {loading ? <div>Loading...</div> : <AdvocateTable visible={visible} />}
         <div className="flex justify-center items-center m-2 gap-2">
@@ -109,7 +109,7 @@ export default function Home() {
             className="border rounded px-3 py-1 disabled:opacity-40"
             onClick={prevPage}
             disabled={currentPage === 1}
-            >
+          >
             Previous
           </button>
           <span className="text-sm">
@@ -120,11 +120,11 @@ export default function Home() {
             className="border rounded px-3 py-1 disabled:opacity-40"
             onClick={nextPage}
             disabled={currentPage === totalPages}
-            >
+          >
             Next
           </button>
         </div>
-            </main>
+      </main>
     </>
   );
 }
