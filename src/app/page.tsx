@@ -2,11 +2,14 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { AdvocateType } from "./types/Advocates";
+import  useDebounce  from "./hooks/useDebounce";
 
 export default function Home() {
   const [advocates, setAdvocates] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
+
+  const debouncedSearchTerm = useDebounce(searchTerm, 1000);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,11 +24,10 @@ export default function Home() {
       }
     };
     fetchData();
-  }, [searchTerm]);
+  }, [debouncedSearchTerm]);
 
   const visible = useMemo(() => {
-    // to do: this should probably be debounced as well ^^
-    const q = searchTerm.trim().toLowerCase();
+    const q = debouncedSearchTerm.trim().toLowerCase();
     if (!q) return advocates;
     return advocates.filter((a: AdvocateType) => {
       const first = (a.firstName ?? "").toLowerCase();
@@ -43,7 +45,7 @@ export default function Home() {
         years.includes(q)
       );
     });
-  }, [advocates, searchTerm]);
+  }, [advocates, debouncedSearchTerm]);
 
   return (
     <main style={{ margin: "24px" }}>
