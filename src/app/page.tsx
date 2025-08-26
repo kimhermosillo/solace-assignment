@@ -2,7 +2,9 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { AdvocateType } from "./types/Advocates";
-import  useDebounce  from "./hooks/useDebounce";
+import useDebounce from "./hooks/useDebounce";
+import AdvocateTable from "./components/AdvocateTable";
+import AdvocateSearchBar from "./components/AdvocateSearchBar";
 
 export default function Home() {
   const [advocates, setAdvocates] = useState([]);
@@ -52,62 +54,13 @@ export default function Home() {
       <h1>Solace Advocates</h1>
       <br />
       <br />
-      <div>
-        <p>Search</p>
-        <p>
-          Searching for: <span id="search-term"></span>
-        </p>
-        <input
-          style={{ border: "1px solid black" }}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <button onClick={() => setSearchTerm("")}>Reset Search</button>
-      </div>
+      <AdvocateSearchBar
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
       <br />
       <br />
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>City</th>
-              <th>Degree</th>
-              <th>Specialties</th>
-              <th>Years of Experience</th>
-              <th>Phone Number</th>
-            </tr>
-          </thead>
-          <tbody>
-            {visible.length ? (
-              visible.map((advocate: AdvocateType, idx) => {
-                return (
-                  <tr key={idx}>
-                    <td>{advocate.firstName}</td>
-                    <td>{advocate.lastName}</td>
-                    <td>{advocate.city}</td>
-                    <td>{advocate.degree}</td>
-                    <td>
-                      {advocate.specialties.map((s, i) => (
-                        <div key={i}>{s}</div>
-                      ))}
-                    </td>
-                    <td>{advocate.yearsOfExperience}</td>
-                    <td>{advocate.phoneNumber}</td>
-                  </tr>
-                );
-              })
-            ) : (
-              <tr>
-                <td>No results found</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      )}
+      {loading ? <div>Loading...</div> : <AdvocateTable visible={visible} />}
     </main>
   );
 }
