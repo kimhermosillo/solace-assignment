@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { AdvocateType } from "./types/Advocates";
 
 export default function Home() {
   const [advocates, setAdvocates] = useState([]);
@@ -26,7 +27,7 @@ export default function Home() {
     // to do: this should probably be debounced as well ^^
     const q = searchTerm.trim().toLowerCase();
     if (!q) return advocates;
-    return advocates.filter((a) => {
+    return advocates.filter((a: AdvocateType) => {
       const first = (a.firstName ?? "").toLowerCase();
       const last = (a.lastName ?? "").toLowerCase();
       const city = (a.city ?? "").toLowerCase();
@@ -80,7 +81,7 @@ export default function Home() {
           </thead>
           <tbody>
             {visible.length ? (
-              visible.map((advocate, idx) => {
+              visible.map((advocate: AdvocateType, idx) => {
                 return (
                   <tr key={idx}>
                     <td>{advocate.firstName}</td>
