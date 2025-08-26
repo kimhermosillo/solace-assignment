@@ -5,18 +5,24 @@ interface AdvocateTableProps {
   visible: AdvocateType[];
 }
 
+const TABLE_HEADER_OPTIONS = [
+  "First Name",
+  "Last Name",
+  "City",
+  "Degree",
+  "Specialties",
+  "Years of Experience",
+  "Phone Number",
+];
+
 const AdvocateTable = ({ visible }: AdvocateTableProps): ReactElement => {
   return (
     <table className="table-auto">
       <thead>
         <tr className="bg-gray-50 text-left">
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>City</th>
-          <th>Degree</th>
-          <th>Specialties</th>
-          <th>Years of Experience</th>
-          <th>Phone Number</th>
+          {TABLE_HEADER_OPTIONS.map((option: string) => (
+            <th>{option}</th>
+          ))}
         </tr>
       </thead>
       <tbody>
