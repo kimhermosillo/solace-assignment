@@ -30,7 +30,6 @@ export default function Home() {
     fetchData();
   }, [searchTerm]);
 
-
   const onClick = () => {
     console.log(advocates);
     setFilteredAdvocates(advocates);
@@ -46,25 +45,30 @@ export default function Home() {
         <p>
           Searching for: <span id="search-term"></span>
         </p>
-        <input style={{ border: "1px solid black" }} onChange={(e) => setSearchTerm(e.target.value)} />
+        <input
+          style={{ border: "1px solid black" }}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
         <button onClick={onClick}>Reset Search</button>
       </div>
       <br />
       <br />
       <table>
         <thead>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>City</th>
-          <th>Degree</th>
-          <th>Specialties</th>
-          <th>Years of Experience</th>
-          <th>Phone Number</th>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>City</th>
+            <th>Degree</th>
+            <th>Specialties</th>
+            <th>Years of Experience</th>
+            <th>Phone Number</th>
+          </tr>
         </thead>
         <tbody>
-          {filteredAdvocates.map((advocate) => {
+          {filteredAdvocates.map((advocate, idx) => {
             return (
-              <tr key={advocate.id}>
+              <tr key={idx}>
                 <td>{advocate.firstName}</td>
                 <td>{advocate.lastName}</td>
                 <td>{advocate.city}</td>
