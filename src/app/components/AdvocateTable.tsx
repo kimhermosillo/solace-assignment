@@ -17,7 +17,7 @@ const TABLE_HEADER_OPTIONS = [
 
 const AdvocateTable = ({ visible }: AdvocateTableProps): ReactElement => {
   return (
-    <table className="table-auto">
+    <table className="table w-full">
       <thead>
         <tr className="bg-gray-50 text-left">
           {TABLE_HEADER_OPTIONS.map((option: string) => (
@@ -29,7 +29,7 @@ const AdvocateTable = ({ visible }: AdvocateTableProps): ReactElement => {
         {visible.length ? (
           visible.map((advocate: AdvocateType, idx: number) => {
             return (
-              <tr key={idx} className="border-t hover:bg-gray-50">
+              <tr key={idx} className="border-t hover:bg-green-50">
                 <td>{advocate.firstName}</td>
                 <td>{advocate.lastName}</td>
                 <td>{advocate.city}</td>
