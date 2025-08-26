@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const [advocates, setAdvocates] = useState([]);
   const [filteredAdvocates, setFilteredAdvocates] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     console.log("fetching advocates...");
@@ -16,25 +17,19 @@ export default function Home() {
     });
   }, []);
 
-  const onChange = (e) => {
-    const searchTerm = e.target.value;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`/api/advocates?search=${searchTerm}`);
+        const json = await res.json();
+        setAdvocates(json.data);
+      } catch (e) {
+        console.error("Failed to fetch advocates", e);
+      }
+    };
+    fetchData();
+  }, [searchTerm]);
 
-    document.getElementById("search-term").innerHTML = searchTerm;
-
-    console.log("filtering advocates...");
-    const filteredAdvocates = advocates.filter((advocate) => {
-      return (
-        advocate.firstName.includes(searchTerm) ||
-        advocate.lastName.includes(searchTerm) ||
-        advocate.city.includes(searchTerm) ||
-        advocate.degree.includes(searchTerm) ||
-        advocate.specialties.includes(searchTerm) ||
-        advocate.yearsOfExperience.includes(searchTerm)
-      );
-    });
-
-    setFilteredAdvocates(filteredAdvocates);
-  };
 
   const onClick = () => {
     console.log(advocates);
@@ -51,7 +46,7 @@ export default function Home() {
         <p>
           Searching for: <span id="search-term"></span>
         </p>
-        <input style={{ border: "1px solid black" }} onChange={onChange} />
+        <input style={{ border: "1px solid black" }} onChange={(e) => setSearchTerm(e.target.value)} />
         <button onClick={onClick}>Reset Search</button>
       </div>
       <br />
