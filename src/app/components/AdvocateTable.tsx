@@ -7,9 +7,9 @@ interface AdvocateTableProps {
 
 const AdvocateTable = ({ visible }: AdvocateTableProps): ReactElement => {
   return (
-    <table>
+    <table className="table-auto">
       <thead>
-        <tr>
+        <tr className="bg-gray-50 text-left">
           <th>First Name</th>
           <th>Last Name</th>
           <th>City</th>
@@ -23,24 +23,33 @@ const AdvocateTable = ({ visible }: AdvocateTableProps): ReactElement => {
         {visible.length ? (
           visible.map((advocate: AdvocateType, idx: number) => {
             return (
-              <tr key={idx}>
+              <tr key={idx} className="border-t hover:bg-gray-50">
                 <td>{advocate.firstName}</td>
                 <td>{advocate.lastName}</td>
                 <td>{advocate.city}</td>
                 <td>{advocate.degree}</td>
                 <td>
-                  {advocate.specialties.map((s, i) => (
-                    <div key={i}>{s}</div>
-                  ))}
+                  <div className="flex flex-wrap gap-1">
+                    {advocate.specialties.map((s, i) => (
+                      <span
+                        key={i}
+                        className="inline-flex items-center rounded-full border px-2 py-0.5 text-xs"
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </div>
                 </td>
-                <td>{advocate.yearsOfExperience}</td>
-                <td>{advocate.phoneNumber}</td>
+                <td className="p-3">{advocate.yearsOfExperience}</td>
+                <td className="p-3">{advocate.phoneNumber}</td>
               </tr>
             );
           })
         ) : (
           <tr>
-            <td>No results found</td>
+            <td className="p-6 text-center text-gray-500" colSpan={7}>
+              No results found
+            </td>
           </tr>
         )}
       </tbody>
