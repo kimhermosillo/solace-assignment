@@ -17,11 +17,13 @@ const TABLE_HEADER_OPTIONS = [
 
 const AdvocateTable = ({ visible }: AdvocateTableProps): ReactElement => {
   return (
-    <table className="table w-full">
+    <table className="w-full border-collapse rounded-xl overflow-hidden shadow-sm bg-white">
       <thead>
-        <tr className="bg-gray-50 text-left">
-          {TABLE_HEADER_OPTIONS.map((option: string) => (
-            <th>{option}</th>
+        <tr className="bg-emerald-50 text-left text-gray-700">
+          {TABLE_HEADER_OPTIONS.map((option: string, i: number) => (
+            <th key={i} className="px-4 py-3 text-sm font-semibold">
+              {option}
+            </th>
           ))}
         </tr>
       </thead>
@@ -29,7 +31,7 @@ const AdvocateTable = ({ visible }: AdvocateTableProps): ReactElement => {
         {visible.length ? (
           visible.map((advocate: AdvocateType, idx: number) => {
             return (
-              <tr key={idx} className="border-t hover:bg-green-50">
+              <tr key={idx} className="border-t hover:bg-emerald-50 transition">
                 <td>{advocate.firstName}</td>
                 <td>{advocate.lastName}</td>
                 <td>{advocate.city}</td>
@@ -39,7 +41,8 @@ const AdvocateTable = ({ visible }: AdvocateTableProps): ReactElement => {
                     {advocate.specialties.map((s, i) => (
                       <span
                         key={i}
-                        className="inline-flex items-center rounded-full border px-2 py-0.5 text-xs"
+                        className="inline-flex items-center rounded-full bg-emerald-100 text-emerald-800
+                             px-2 py-0.5 text-xs font-medium opacity-90"
                       >
                         {s}
                       </span>

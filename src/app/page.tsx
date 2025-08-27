@@ -50,7 +50,9 @@ export default function Home() {
             specialties,
           } = a;
           const specs = (specialties ?? []).join(" ").toLowerCase();
+          const fullName = `${a.firstName} ${a.lastName}`.toLowerCase();
           return (
+            fullName.includes(q) ||
             firstName.toLowerCase().includes(q) ||
             lastName.toLowerCase().includes(q) ||
             city.toLowerCase().includes(q) ||
@@ -64,57 +66,68 @@ export default function Home() {
     return filtered;
   }, [advocates, debouncedSearchTerm]);
 
+  useEffect(() => {
+    setPage(1);
+  }, [debouncedSearchTerm, pageSize]);
+
   return (
-    <main style={{ margin: "24px" }}>
-      <header className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold tracking-tight">Solace Advocates</h1>
-        <p className="text-sm text-gray-600">
-          Search and explore our advocate network to find your best match.
-        </p>
-      </header>
-      <br />
-      <br />
-      <AdvocateSearchBar
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-      />
-      <br />
-      <div className="w-40">
-        <label className="text-sm font-medium mb-1 block">Rows / page</label>
-        <select
-          className="border rounded px-3 py-2 w-full"
-          value={pageSize}
-          onChange={(e) => setPageSize(Number(e.target.value))}
-        >
-          {PAGE_SIZE_OPTIONS.map((n) => (
-            <option key={n} value={n}>
-              {n}
-            </option>
-          ))}
-        </select>
-      </div>
-      <br />
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <AdvocateTable visible={filteredAdvocates} />
-      )}
-      <footer className="flex flex-col md:flex-row items-center justify-between gap-3">
+    <>
+      <main className="p-6 space-y-6">
+        <header className="space-y-1">
+          <h1 className="text-3xl font-bold text-emerald-700">
+            Solace Advocates
+          </h1>
+          <p className="text-sm text-gray-600">
+            Search and explore our advocate network to find your best match.
+          </p>
+        </header>
+
+        <div className="flex justify-between items-end gap-6">
+          <AdvocateSearchBar
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+          />
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Rows / page
+            </label>
+            <select
+              className="border rounded-md px-3 py-2 shadow-sm
+                   focus:border-emerald-600 focus:ring-emerald-200"
+              value={pageSize}
+              onChange={(e) => setPageSize(Number(e.target.value))}
+            >
+              {PAGE_SIZE_OPTIONS.map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {loading ? (
+          <div className="text-gray-500">Loading advocates…</div>
+        ) : (
+          <AdvocateTable visible={filteredAdvocates} />
+        )}
         {filteredAdvocates.length > 1 && (
-          <div className="flex items-center gap-2">
+          <div className="flex justify-center items-center gap-4">
             <button
-              className="border rounded px-3 py-1 disabled:opacity-40"
+              className="px-4 py-2 rounded-md border text-sm
+                 text-gray-700 hover:bg-gray-100 disabled:opacity-40"
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
             >
               Previous
             </button>
-            <span className="text-sm">
+            <span className="text-sm text-gray-600">
               Page <span className="font-medium">{page}</span> of{" "}
               <span className="font-medium">{totalPages}</span>
             </span>
             <button
-              className="border rounded px-3 py-1 disabled:opacity-40"
+              className="px-4 py-2 rounded-md border text-sm
+                 text-gray-700 hover:bg-gray-100 disabled:opacity-40"
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
             >
@@ -122,7 +135,7 @@ export default function Home() {
             </button>
           </div>
         )}
-      </footer>
-    </main>
+      </main>
+    </>
   );
 }
