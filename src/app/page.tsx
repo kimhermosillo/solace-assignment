@@ -44,8 +44,9 @@ export default function Home() {
             specialties,
           } = a;
           const specs = (specialties ?? []).join(" ").toLowerCase();
+          const fullName = `${a.firstName} ${a.lastName}`.toLowerCase();
           return (
-            // todo: add first and last name
+            fullName.includes(q) ||
             firstName.toLowerCase().includes(q) ||
             lastName.toLowerCase().includes(q) ||
             city.toLowerCase().includes(q) ||
@@ -76,7 +77,9 @@ export default function Home() {
     <>
       <main className="p-4 m-4">
         <header className="flex flex-col gap-2">
-          <h1 className="text-3xl font-bold">Solace Advocates</h1>
+          <h1 className="text-3xl font-bold text-emerald-700">
+            Solace Advocates
+          </h1>
           <p className="text-sm text-gray-600">
             Search and explore our advocate network to find your best match.
           </p>
@@ -86,12 +89,13 @@ export default function Home() {
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
           />
-          <div className="w-40 flex end">
-            <label className="text-sm font-medium mb-1 block">
+          <div className="w-40 flex end items-center">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Rows / page
             </label>
             <select
-              className="border rounded px-3 py-2 w-full"
+              className="border rounded-md px-3 py-2 shadow-sm
+               focus:border-emerald-600 focus:ring-emerald-200"
               value={pageSize}
               onChange={(e) => setPageSize(Number(e.target.value))}
             >
@@ -106,7 +110,8 @@ export default function Home() {
         {loading ? <div>Loading...</div> : <AdvocateTable visible={visible} />}
         <div className="flex justify-center items-center m-2 gap-2">
           <button
-            className="border rounded px-3 py-1 disabled:opacity-40"
+            className="px-4 py-2 rounded-md border text-sm
+            text-gray-700 hover:bg-gray-100 disabled:opacity-40"
             onClick={prevPage}
             disabled={currentPage === 1}
           >
@@ -117,7 +122,8 @@ export default function Home() {
             <span className="font-medium">{totalPages}</span>
           </span>
           <button
-            className="border rounded px-3 py-1 disabled:opacity-40"
+            className="px-4 py-2 rounded-md border text-sm
+                  text-gray-700 hover:bg-gray-100 disabled:opacity-40"
             onClick={nextPage}
             disabled={currentPage === totalPages}
           >
