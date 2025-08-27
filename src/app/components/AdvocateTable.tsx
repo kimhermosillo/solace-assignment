@@ -20,8 +20,8 @@ const AdvocateTable = ({ visible }: AdvocateTableProps): ReactElement => {
     <table className="table w-full">
       <thead>
         <tr className="bg-gray-50 text-left">
-          {TABLE_HEADER_OPTIONS.map((option: string) => (
-            <th>{option}</th>
+          {TABLE_HEADER_OPTIONS.map((option: string, i: number) => (
+            <th key={i}>{option}</th>
           ))}
         </tr>
       </thead>
