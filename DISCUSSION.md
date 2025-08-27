@@ -25,3 +25,13 @@ If I had more time, I would have liked to implement:
 - Of course.. unit tests.
 
 These aren’t critical for a 2 hour take home but would significantly elevate patient experience.
+
+As far as BE perf:
+
+- Add support for sorting by years of experience, city, or last name (?sort=yearsOfExperience&dir=asc).
+
+- Query params for degree, city, specialty, and experience range (?city=Denver&minYears=5).
+
+- Performance testing.
+
+- Return structured API errors, validate query params, and handle bad inputs gracefully.
